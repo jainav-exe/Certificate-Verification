@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Verification</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        #qrcode {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Certificate Verification</h2>
+        <p>Approved by Wipro</p>
+        <img src="certificate.jpg" alt="Certificate">
+        <h3>Scan to Verify</h3>
+        <div id="qrcode"></div>
+    </div>
+
+    <script>
+        function generateRandomID() {
+            return Math.random().toString(36).substr(2, 10);
+        }
+        const certID = generateRandomID();
+        const verifyURL = `https://your-github-pages-url.com/verify?cert=${certID}`;
+        new QRCode(document.getElementById("qrcode"), {
+            text: verifyURL,
+            width: 150,
+            height: 150
+        });
+    </script>
+</body>
+</html>
