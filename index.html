@@ -19,6 +19,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             margin: auto;
+            display: none;
         }
         img {
             width: 100%;
@@ -27,21 +28,78 @@
         #qrcode {
             margin-top: 20px;
         }
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .checkmark-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .checkmark-box {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .checkmark {
+            width: 50px;
+            height: 50px;
+            border: 5px solid green;
+            border-top: none;
+            border-right: none;
+            transform: rotate(-45deg);
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards 2s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="loading" id="loading">Loading, please wait...</div>
+    <div class="checkmark-container" id="checkmark-container" style="display: none;">
+        <div class="checkmark-box">
+            <div class="checkmark"></div>
+        </div>
+    </div>
+    <div class="container" id="main-content">
         <h2>Certificate Verification</h2>
         <p>Approved by Wipro</p>
         <img src="certificate.jpg" alt="Certificate">
         <h3>Scan to Verify</h3>
         <div id="qrcode"></div>
     </div>
-
     <script>
         function generateRandomID() {
             return Math.random().toString(36).substr(2, 10);
         }
+        
+        function showContent() {
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("checkmark-container").style.display = "flex";
+            setTimeout(() => {
+                document.getElementById("checkmark-container").style.display = "none";
+                document.getElementById("main-content").style.display = "block";
+            }, 3000);
+        }
+        
+        setTimeout(showContent, 2000);
+        
         const certID = generateRandomID();
         const verifyURL = `https://your-github-pages-url.com/verify?cert=${certID}`;
         new QRCode(document.getElementById("qrcode"), {
